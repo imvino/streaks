@@ -1,0 +1,21 @@
+{
+  "name": "streaks",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/imvino/streaks.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/imvino/streaks/issues"
+  },
+  "homepage": "https://github.com/imvino/streaks#readme",
+  "devDependencies": {
+    "@playwright/test": "^1.26.1"
+  }
+}
