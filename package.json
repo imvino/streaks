@@ -17,5 +17,9 @@
   "homepage": "https://github.com/imvino/streaks#readme",
   "devDependencies": {
     "@playwright/test": "^1.26.1"
+  },
+  "dependencies": {
+    "csv-parser": "^3.0.0",
+    "json-2-csv": "^3.17.2"
   }
 }

@@ -1,4 +1,4 @@
-const {chromium} =  require('@playwright/test');
+const {chromium} = require('@playwright/test');
 (async () => {
     const browser = await chromium.launch({headless: false, devtools: true});
     const context = await browser.newContext();
@@ -30,42 +30,49 @@ const {chromium} =  require('@playwright/test');
     //     console.log( request.url(),'request.url()')
     // })
     page.on('load', async (response) => {
-        const url=await page.url();
-         console.log( url,'url')
+        const url = await page.url();
+        console.log(url, 'url')
         // console.log( response.url(),'response.url()')
 
         await page.waitForSelector('#screen_header p');
-        const header = await page.innerText('#screen_header p') //'section div div div div:nth-of-type(1) div button p'
+        const header = await page.innerText('#screen_header p')
         console.log(header)
-      if(header === 'Deployed'){
-      // if(header.length != 0 && response.url().includes('deployed_count2')){
-
-          const link = await page.$$('section div div div div div button p'); //'section div div div div:nth-of-type(1) div button p'
-          console.log(link.length)
-          const txtm = await page.innerText('section div div div div:nth-of-type(1) div button p')
-
-          await page.click('section div div div div:nth-of-type(1) div button p')
-
-          await page.waitForSelector('.modal-slide');
-          const txtp = await page.innerText('.modal-slide > div > div > div > p')
-          if(txtm+(' Orderlog') === txtp){
-              await page.click('.modal-slide button .icon-arrow_down_filled')
-          }
-      }
+        if (header === 'Deployed') {
+            // if(header.length != 0 && response.url().includes('deployed_count2')){
+            // let i=0;
+            const link = await page.$$('section div div div div div button p');
+            console.log(link.length)
+            for(let i=0;i<1;i++) {
+                var txt = 'div [role="row"]:nth-of-type(' + (i + 1) + ') button p'
+                console.log(txt)
+                const txtm = await page.innerText(txt)
+                await page.click(txt)
+                await page.waitForSelector('.modal-slide');
+                const txtp = await page.innerText('.modal-slide > div > div > div > p')
+                if (txtm + (' Orderlog') === txtp) {
+                    console.log(txtm)
+                    const [download] = await Promise.all([
+                        page.waitForEvent('download'),
+                        page.locator('.modal-slide button .icon-arrow_down_filled').click(),
+                    ]);
+                    console.log(await download.path());
+                    await download.saveAs('src/'+txtm + '.csv');
+                    await page.click('.modal-slide button .icon-backward_head')
+                }
+            }
+        }
 
         //console.log(response.url())
         //console.log(response.url().includes('tab=paper'),response.url())
         // if (response.url().includes('tab=paper')) {
         //     console.log( response.status())
-          //  document.cookie = "token=SUNHOUY3TnhLS3dlcjRYVVphd3B4T01zN2lZYlpEYklUYUhXRzZDVUpmckZFdmFJUUpPcEN6VzdJdTAwdUx0UA"; document.cookie = "id=YjJ4NW00OW1vY3ZtZ2dhbTg2bDVrYWF4eGE5NHVoaXQ"
+        //  document.cookie = "token=SUNHOUY3TnhLS3dlcjRYVVphd3B4T01zN2lZYlpEYklUYUhXRzZDVUpmckZFdmFJUUpPcEN6VzdJdTAwdUx0UA"; document.cookie = "id=YjJ4NW00OW1vY3ZtZ2dhbTg2bDVrYWF4eGE5NHVoaXQ"
 
         // }
     })
 
 
-  //  await page.goto('https://www.streak.tech/algos?tab=paper');
-
-
+    //  await page.goto('https://www.streak.tech/algos?tab=paper');
 
 
 })();
