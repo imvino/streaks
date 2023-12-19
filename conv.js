@@ -18,11 +18,14 @@ files.map((file, num) => {
                 return new Date(a.Time) - new Date(b.Time); // descending
             })
                 .filter(function (entry) {
-                    return (entry['Log Tag'] === 'Bought' || entry['Log Tag'] === 'Sold')
+                    return (entry['Log Tag'] === 'Bought' || entry['Log Tag'] === 'Stop loss alert' || entry['Log Tag'] === 'Target profit alert')
                 })
                 .map((x, i) => {
+                    delete x['Quantity'];
                     delete x['Segment'];
                     delete x['Log Message'];
+                    delete x['Order Type'];
+                    delete x['Avg Trade Price'];
                     return x
                 });
             // console.log(r);
